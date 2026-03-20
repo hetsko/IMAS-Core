@@ -69,12 +69,13 @@ MACOSX_DEPLOYMENT_TARGET = "14.0"
 [tool.cibuildwheel.macos]
 archs = ["arm64"]
 repair-wheel-command = "delocate-wheel -w {dest_dir} {wheel}"
-   
+
 [tool.scikit-build.cmake.define]
 BUILD_SHARED_LIBS = "ON"
 DOCS_ONLY = { env = "DOCS_ONLY", default = "OFF" }
 AL_BACKEND_HDF5 = { env = "AL_BACKEND_HDF5", default = "ON" }
 AL_BACKEND_UDA = { env = "AL_BACKEND_UDA", default = "ON" }
+AL_BACKEND_GRPC = { env = "AL_BACKEND_GRPC", default = "ON" }
 AL_BACKEND_MDSPLUS = { env = "AL_BACKEND_MDSPLUS", default = "OFF" }
 AL_BUILD_MDSPLUS_MODELS = { env = "AL_BUILD_MDSPLUS_MODELS", default = "OFF" }
 AL_PYTHON_BINDINGS = "ON"

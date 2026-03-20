@@ -23,6 +23,7 @@ option(AL_BACKEND_MDSPLUS "Build the MDSplus backend" OFF)
 option(AL_BACKEND_HDF5 "Build the HDF5 backend" ON)
 option(AL_BACKEND_UDA "Build the UDA backend" OFF)
 option(AL_BACKEND_UDAFAT "Build the UDA backend (use FAT UDA)" OFF)
+option(AL_BACKEND_GRPC "Build the gRPC backend" OFF)
 include(CMakeDependentOption)
 cmake_dependent_option(AL_BUILD_MDSPLUS_MODELS "Build MDSplus models" ON
 AL_BACKEND_MDSPLUS OFF)
@@ -76,10 +77,10 @@ endif()
 if(APPLE)
   # Disable MDSPlus:
   message(STATUS "Disabling MDSPlus backend on macOS")
-  set(AL_BACKEND_MDSPLUS OFF CACHE BOOL "MDSPlus backend" FORCE)    
+  set(AL_BACKEND_MDSPLUS OFF CACHE BOOL "MDSPlus backend" FORCE)
   # Disable UDA:
   message(STATUS "Disabling UDA backend on macOS")
-  set(AL_BACKEND_UDA OFF CACHE BOOL "UDA backend" FORCE)    
+  set(AL_BACKEND_UDA OFF CACHE BOOL "UDA backend" FORCE)
 endif()
 
 
@@ -99,7 +100,7 @@ if(WIN32)
       if(EXISTS "${_VCPKG_PATH}")
         list(APPEND CMAKE_PREFIX_PATH "${_VCPKG_PATH}")
         message(STATUS "al-core: Auto-detected vcpkg path: ${_VCPKG_PATH}")
-        
+
         # Set PKG_CONFIG_EXECUTABLE for vcpkg's pkgconf
         if(EXISTS "${_VCPKG_PATH}/tools/pkgconf/pkgconf.exe")
           set(PKG_CONFIG_EXECUTABLE "${_VCPKG_PATH}/tools/pkgconf/pkgconf.exe" CACHE FILEPATH "pkg-config executable")
@@ -108,12 +109,12 @@ if(WIN32)
       endif()
     endif()
   endif()
-  
+
   message(STATUS "al-core: CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
-  
+
   # Add cmake module path for FindPThreads4W.cmake fallback
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/common/cmake")
-  
+
   # Try CONFIG mode first, fall back to MODULE mode
   find_package(PThreads4W CONFIG QUIET)
   if(NOT PThreads4W_FOUND)
@@ -122,7 +123,7 @@ if(WIN32)
   else()
     message(STATUS "Found PThreads4W via CONFIG mode")
   endif()
-  
+
   find_package(dlfcn-win32 CONFIG REQUIRED)
 endif()
 
