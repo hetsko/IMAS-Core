@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package data_transfer;
+
+// CHAR_DATA
+// INTEGER_DATA
+// DOUBLE_DATA
+// COMPLEX_DATA
+
+// Data requests
+
+message DataRequestChar {
+    string path = 1;
+    string timebasepath = 2;
+}
+
+message DataResponseChar {
+    repeated uint32 data = 1;
+    repeated int32 dimsizes = 2;
+}
+
+message DataRequestInteger {
+    string path = 1;
+    string timebasepath = 2;
+}
+
+message DataResponseInteger {
+    repeated int32 data = 1;
+    repeated int32 dimsizes = 2;
+}
+
+message DataRequestDouble {
+    string path = 1;
+    string timebasepath = 2;
+}
+
+message DataResponseDouble {
+    repeated double data = 1;
+    repeated int32 dimsizes = 2;
+}
+
+// Structure requests
+
+message ArraystructSizeRequest {
+    string path = 1;
+}
+
+message ArraystructSizeResponse {
+    int32 size = 1;
+}
+
+// The service definition
+service DataTransfer {
+    rpc GetChar (DataRequestChar) returns (DataResponseChar);
+    rpc GetInteger (DataRequestInteger) returns (DataResponseInteger);
+    rpc GetDouble (DataRequestDouble) returns (DataResponseDouble);
+
+    rpc GetArraystructSize (ArraystructSizeRequest) returns (ArraystructSizeResponse);
+}

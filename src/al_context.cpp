@@ -213,10 +213,12 @@ void DataEntryContext::setBackendID(const std::string &path, const std::string &
         backend_id = MEMORY_BACKEND;
     } else if (path =="flexbuffers") {
         backend_id = FLEXBUFFERS_BACKEND;
-    } else if (path == "uda" || !host.empty()) {
+    }else if (path == "uda" || path == "/uda") {
         backend_id = UDA_BACKEND;
+    }  else if (path == "grpc" || path == "/grpc") {
+        backend_id = GRPC_BACKEND;
     } else {
-        throw ALContextException("Unable to identify a backend from the URI",LOG);
+        throw ALContextException("Unable to identify a backend from the URI: " + path,LOG);
     }
 }
 
